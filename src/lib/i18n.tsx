@@ -1,8 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 export type Locale = 'en' | 'zh' | 'ja'
-const LOCALE_STORAGE_KEY = 'agentsan.locale.v2'
-const LOCALE_SELECTED_KEY = 'agentsan.locale.selected.v2'
+const LOCALE_COOKIE_KEY = 'agentsan.locale.v2'
 
 const META_DESCRIPTION =
   'Agent San is a family of agent applications for real-world business workflows.'
@@ -270,28 +269,34 @@ const htmlLangMap: Record<Locale, string> = {
   ja: 'ja',
 }
 
-export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('en')
+export function normalizeLocale(value: string | undefined | null): Locale {
+  if (value === 'zh' || value === 'ja' || value === 'en') {
+    return value
+  }
+  return 'en'
+}
 
-  useEffect(() => {
-    const hasSelected = window.localStorage.getItem(LOCALE_SELECTED_KEY) === '1'
-    const saved = window.localStorage.getItem(LOCALE_STORAGE_KEY)
-    if (!hasSelected) {
-      return
-    }
-    if (saved === 'en' || saved === 'zh' || saved === 'ja') {
-      setLocaleState(saved)
-    }
-  }, [])
+export function getHtmlLang(locale: Locale) {
+  return htmlLangMap[locale]
+}
+
+export function I18nProvider({
+  children,
+  initialLocale = 'en',
+}: {
+  children: React.ReactNode
+  initialLocale?: Locale
+}) {
+  const [locale, setLocaleState] = useState<Locale>(initialLocale)
 
   useEffect(() => {
     document.documentElement.lang = htmlLangMap[locale]
   }, [locale])
 
   const setLocale = (next: Locale) => {
-    setLocaleState(next)
-    window.localStorage.setItem(LOCALE_STORAGE_KEY, next)
-    window.localStorage.setItem(LOCALE_SELECTED_KEY, '1')
+    const normalized = normalizeLocale(next)
+    setLocaleState(normalized)
+    document.cookie = `${LOCALE_COOKIE_KEY}=${normalized}; Path=/; Max-Age=31536000; SameSite=Lax`
   }
 
   const value = useMemo<I18nContextValue>(() => {
