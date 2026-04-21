@@ -2,6 +2,7 @@ import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 import appCss from '../styles.css?url'
+import { I18nProvider } from '#/lib/i18n'
 
 export const Route = createRootRoute({
   head: () => ({
@@ -12,7 +13,7 @@ export const Route = createRootRoute({
       {
         name: 'description',
         content:
-          'Agent San 是一系列面向真实业务场景的 Agent 应用，覆盖协同编排、系统连接与可观测治理。',
+          'Agent San is a family of agent applications for real-world business workflows.',
       },
     ],
     links: [{ rel: 'stylesheet', href: appCss }],
@@ -22,14 +23,16 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="zh-CN">
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
       <body className="font-sans antialiased [overflow-wrap:anywhere]">
-        <Header />
-        {children}
-        <Footer />
+        <I18nProvider>
+          <Header />
+          {children}
+          <Footer />
+        </I18nProvider>
         <Scripts />
       </body>
     </html>

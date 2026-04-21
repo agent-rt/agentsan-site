@@ -1,29 +1,34 @@
 import { Link } from '@tanstack/react-router'
+import LanguageSwitcher from './LanguageSwitcher'
+import { useI18n } from '#/lib/i18n'
 
 export default function Header() {
+  const { messages } = useI18n()
+
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/85 px-4 backdrop-blur-lg">
-      <nav className="page-wrap flex items-center gap-4 py-3">
+      <nav className="page-wrap flex items-center gap-3 py-3">
         <Link to="/" className="brand no-underline">
           <span className="brand-dot" aria-hidden="true" />
           Agent San
         </Link>
 
-        <div className="ml-auto flex items-center gap-4 text-sm font-medium text-muted-foreground">
+        <div className="ml-auto flex items-center gap-2 text-sm font-medium text-muted-foreground sm:gap-4">
           <Link to="/" className="hover:text-foreground">
-            首页
+            {messages.nav.home}
           </Link>
           <Link to="/about" className="hover:text-foreground">
-            关于
+            {messages.nav.about}
           </Link>
           <a
             href="https://github.com/agent-rt/agentsan-site"
             target="_blank"
             rel="noreferrer"
-            className="hover:text-foreground"
+            className="hidden hover:text-foreground sm:inline-flex"
           >
             GitHub
           </a>
+          <LanguageSwitcher />
         </div>
       </nav>
     </header>
