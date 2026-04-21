@@ -1,86 +1,114 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
+import { Badge } from '#/components/ui/badge'
+import { buttonVariants } from '#/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '#/components/ui/card'
+import { Separator } from '#/components/ui/separator'
+import { cn } from '#/lib/utils'
 
-export const Route = createFileRoute('/')({ component: App })
+export const Route = createFileRoute('/')({ component: HomePage })
 
-function App() {
+const highlights = [
+  {
+    title: '多 Agent 协作',
+    body: '将研究、执行、校验分配给不同 Agent，形成可复用的任务流水线。',
+  },
+  {
+    title: '企业系统连接',
+    body: '把 Wiki、工单、支付、数据库接入 Agent，让输出直接进入业务流程。',
+  },
+  {
+    title: '可观测与治理',
+    body: '记录调用轨迹、上下文和策略结果，便于审计、优化与风险控制。',
+  },
+]
+
+const products = [
+  {
+    name: 'Agent San Studio',
+    detail: '统一管理团队 Agent、提示模板和执行记录。',
+    state: 'Private Beta',
+  },
+  {
+    name: 'Agent San Flow',
+    detail: '以流程方式编排多 Agent，支持人机协同与自动回滚。',
+    state: 'Design Partner',
+  },
+  {
+    name: 'Agent San Guard',
+    detail: '提供权限边界、策略拦截和异常告警，保障生产安全。',
+    state: 'Roadmap',
+  },
+]
+
+function HomePage() {
   return (
-    <main className="page-wrap px-4 pb-8 pt-14">
-      <section className="island-shell rise-in relative overflow-hidden rounded-[2rem] px-6 py-10 sm:px-10 sm:py-14">
-        <div className="pointer-events-none absolute -left-20 -top-24 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(79,184,178,0.32),transparent_66%)]" />
-        <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-[radial-gradient(circle,rgba(47,106,74,0.18),transparent_66%)]" />
-        <p className="island-kicker mb-3">TanStack Start Base Template</p>
-        <h1 className="display-title mb-5 max-w-3xl text-4xl leading-[1.02] font-bold tracking-tight text-[var(--sea-ink)] sm:text-6xl">
-          Start simple, ship quickly.
+    <main className="page-wrap px-4 pb-16 pt-10 sm:pt-14">
+      <section className="hero-panel rounded-3xl p-6 sm:p-10">
+        <Badge variant="secondary">Agent Apps Platform</Badge>
+        <h1 className="mt-5 font-heading text-4xl leading-tight font-semibold tracking-tight text-foreground sm:text-6xl">
+          Agent San
+          <br />
+          一组面向真实场景的 Agent 应用
         </h1>
-        <p className="mb-8 max-w-2xl text-base text-[var(--sea-ink-soft)] sm:text-lg">
-          This base starter intentionally keeps things light: two routes, clean
-          structure, and the essentials you need to build from scratch.
+        <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
+          Agent San 是一系列 Agent 应用的统称，目标是让团队把 AI 能力稳定接入日常业务：
+          能编排、能连接、能治理、能上线。
         </p>
-        <div className="flex flex-wrap gap-3">
+        <div className="mt-8 flex flex-wrap gap-3">
           <a
-            href="/about"
-            className="rounded-full border border-[rgba(50,143,151,0.3)] bg-[rgba(79,184,178,0.14)] px-5 py-2.5 text-sm font-semibold text-[var(--lagoon-deep)] no-underline transition hover:-translate-y-0.5 hover:bg-[rgba(79,184,178,0.24)]"
+            href="https://agentsan.app"
+            className={cn(buttonVariants({ size: 'lg' }), 'no-underline')}
           >
-            About This Starter
+            打开 agentsan.app
           </a>
-          <a
-            href="https://tanstack.com/router"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full border border-[rgba(23,58,64,0.2)] bg-white/50 px-5 py-2.5 text-sm font-semibold text-[var(--sea-ink)] no-underline transition hover:-translate-y-0.5 hover:border-[rgba(23,58,64,0.35)]"
+          <Link
+            to="/about"
+            className={cn(
+              buttonVariants({ variant: 'outline', size: 'lg' }),
+              'no-underline'
+            )}
           >
-            Router Guide
-          </a>
+            了解产品方向
+          </Link>
         </div>
       </section>
 
-      <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {[
-          [
-            'Type-Safe Routing',
-            'Routes and links stay in sync across every page.',
-          ],
-          [
-            'Server Functions',
-            'Call server code from your UI without creating API boilerplate.',
-          ],
-          [
-            'Streaming by Default',
-            'Ship progressively rendered responses for faster experiences.',
-          ],
-          [
-            'Tailwind Native',
-            'Design quickly with utility-first styling and reusable tokens.',
-          ],
-        ].map(([title, desc], index) => (
-          <article
-            key={title}
-            className="island-shell feature-card rise-in rounded-2xl p-5"
-            style={{ animationDelay: `${index * 90 + 80}ms` }}
-          >
-            <h2 className="mb-2 text-base font-semibold text-[var(--sea-ink)]">
-              {title}
-            </h2>
-            <p className="m-0 text-sm text-[var(--sea-ink-soft)]">{desc}</p>
-          </article>
+      <section className="mt-8 grid gap-4 md:grid-cols-3">
+        {highlights.map((item) => (
+          <Card key={item.title} className="glass-card">
+            <CardHeader>
+              <CardTitle>{item.title}</CardTitle>
+              <CardDescription>{item.body}</CardDescription>
+            </CardHeader>
+          </Card>
         ))}
       </section>
 
-      <section className="island-shell mt-8 rounded-2xl p-6">
-        <p className="island-kicker mb-2">Quick Start</p>
-        <ul className="m-0 list-disc space-y-2 pl-5 text-sm text-[var(--sea-ink-soft)]">
-          <li>
-            Edit <code>src/routes/index.tsx</code> to customize the home page.
-          </li>
-          <li>
-            Update <code>src/components/Header.tsx</code> and{' '}
-            <code>src/components/Footer.tsx</code> for brand links.
-          </li>
-          <li>
-            Add routes in <code>src/routes</code> and tweak visual tokens in{' '}
-            <code>src/styles.css</code>.
-          </li>
-        </ul>
+      <section className="mt-10 rounded-3xl border border-border/70 bg-card/90 p-6 sm:p-8">
+        <div className="flex items-center justify-between gap-3">
+          <h2 className="font-heading text-2xl font-semibold tracking-tight">应用矩阵</h2>
+          <Badge variant="outline">持续演进</Badge>
+        </div>
+        <Separator className="my-5" />
+        <div className="grid gap-4 lg:grid-cols-3">
+          {products.map((item) => (
+            <Card key={item.name} className="h-full">
+              <CardHeader>
+                <CardTitle>{item.name}</CardTitle>
+                <CardDescription>{item.detail}</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Badge variant="ghost">{item.state}</Badge>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </section>
     </main>
   )

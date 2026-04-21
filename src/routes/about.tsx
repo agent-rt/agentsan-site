@@ -1,21 +1,19 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { Badge } from '#/components/ui/badge'
 
-export const Route = createFileRoute('/about')({
-  component: About,
-})
+export const Route = createFileRoute('/about')({ component: AboutPage })
 
-function About() {
+function AboutPage() {
   return (
     <main className="page-wrap px-4 py-12">
-      <section className="island-shell rounded-2xl p-6 sm:p-8">
-        <p className="island-kicker mb-2">About</p>
-        <h1 className="display-title mb-3 text-4xl font-bold text-[var(--sea-ink)] sm:text-5xl">
-          A small starter with room to grow.
+      <section className="rounded-3xl border border-border/70 bg-card/90 p-6 sm:p-8">
+        <Badge variant="secondary">About Agent San</Badge>
+        <h1 className="mt-4 font-heading text-4xl font-semibold tracking-tight sm:text-5xl">
+          从 Demo AI 到 Production Agent
         </h1>
-        <p className="m-0 max-w-3xl text-base leading-8 text-[var(--sea-ink-soft)]">
-          TanStack Start gives you type-safe routing, server functions, and
-          modern SSR defaults. Use this as a clean foundation, then layer in
-          your own routes, styling, and add-ons.
+        <p className="mt-5 max-w-3xl text-base leading-8 text-muted-foreground">
+          Agent San 聚焦企业落地：通过标准化的 Agent 组件、连接器和治理能力，
+          让不同团队可以按业务优先级逐步上线 Agent 场景，而不是一次性重构系统。
         </p>
       </section>
     </main>
