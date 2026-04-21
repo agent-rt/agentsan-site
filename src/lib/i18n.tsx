@@ -2,8 +2,6 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
 export type Locale = 'en' | 'zh' | 'ja'
 
-const LOCALE_STORAGE_KEY = 'agentsan.locale'
-
 const META_DESCRIPTION =
   'Agent San is a family of agent applications for real-world business workflows.'
 
@@ -264,19 +262,6 @@ type I18nContextValue = {
 
 const I18nContext = createContext<I18nContextValue | null>(null)
 
-function getStoredLocale(): Locale {
-  if (typeof window === 'undefined') {
-    return 'en'
-  }
-
-  const value = window.localStorage.getItem(LOCALE_STORAGE_KEY)
-  if (value === 'en' || value === 'zh' || value === 'ja') {
-    return value
-  }
-
-  return 'en'
-}
-
 const htmlLangMap: Record<Locale, string> = {
   en: 'en',
   zh: 'zh-CN',
@@ -287,12 +272,6 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>('en')
 
   useEffect(() => {
-    const stored = getStoredLocale()
-    setLocaleState(stored)
-  }, [])
-
-  useEffect(() => {
-    window.localStorage.setItem(LOCALE_STORAGE_KEY, locale)
     document.documentElement.lang = htmlLangMap[locale]
   }, [locale])
 
